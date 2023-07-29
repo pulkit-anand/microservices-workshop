@@ -1,14 +1,10 @@
-const cote = require('cote')
-const {Restaurant, menuItems} = require('../shared/database/model/restaurant');
-const sequelize = require('../shared/database/pgdb');
+import cote from 'cote';
+import { Restaurant, menuItems } from '../shared//database/model/restaurant';
+import sequelize from '../shared/database/pgdb';
 
 
 const restaurantsResponder = new cote.Responder({ name: 'restaurants responder', key: 'restaurants' })
-restaurantsResponder.on('*', req => req.type && console.log(req))
-
-
-restaurantsResponder.on(req => req.type && console.log(req))
-
+restaurantsResponder.on('*', (req: any) => req.type && console.log(req))
 
 async function initializeRestaurantsData() {
     const restaurants = [{
@@ -31,7 +27,7 @@ async function initializeRestaurantsData() {
         }]
     }]
     
-    for(rest of restaurants){
+    for(const rest of restaurants){
         await Restaurant.create(rest, {
             include: [
                 {
@@ -59,4 +55,4 @@ const getRestaurantsFromDb = async () => {
 
 }
 
-restaurantsResponder.on('list', req => getRestaurantsFromDb())
+restaurantsResponder.on('list', (req: any) => getRestaurantsFromDb())

@@ -1,13 +1,14 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 require('dotenv').config();
 
-const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
+// const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 
-const postgresql = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  dialect: 'postgres',
-  host: DB_HOST,
-  port: DB_PORT
-});
+
+// const postgresql = new Sequelize(DB_NAME!, DB_USER!, DB_PASSWORD!, {
+//   dialect: 'postgres',
+//   host: DB_HOST!,
+//   port: DB_PORT
+// });
 
 const inmemory = new Sequelize("sqlite::memory:", {
   logging: false
@@ -23,5 +24,6 @@ const sequelize = inmemory;
       }
 })();
 
+export default sequelize;
 
-module.exports = sequelize;
+

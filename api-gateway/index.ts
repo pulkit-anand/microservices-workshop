@@ -1,6 +1,6 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cote = require('cote')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cote from 'cote'
 
 const app = express()
 
@@ -12,12 +12,12 @@ const orderRequester = new cote.Requester({ name: 'order requester', key: 'order
 
 const deliveryRequester = new cote.Requester({ name: 'delivery requester', key: 'deliveries' })
 
-app.get('/restaurants', async (req, res) => {
+app.get('/restaurants', async (req:any, res:any) => {
     const restaurants = await restaurantsRequester.send({ type: 'list' })
     res.send(restaurants);
 })
 
-app.post('/order', async (req, res) => {
+app.post('/order', async (req:any, res:any) => {
     const order = await orderRequester.send({ type: 'create order', order: req.body })
     const delivery = await deliveryRequester.send({ type: 'create delivery', order })
 
