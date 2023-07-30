@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
-require('dotenv').config();
+// const result = require('dotenv').config();
+
+// console.log(result)
 
 // const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 
@@ -16,14 +18,13 @@ const inmemory = new Sequelize("sqlite::memory:", {
 
 const sequelize = inmemory;
 (async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-      } catch (error) {
-        console.error('Unable to connect to the database:', error);
-      }
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
 })();
 
+
 export default sequelize;
-
-

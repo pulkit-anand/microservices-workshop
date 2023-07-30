@@ -1,8 +1,9 @@
-import { Sequelize, Model, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import sequelize from "../pgdb";
+import { Restaurant } from "./restaurant";
 export const MenuItem = sequelize.define('MenuItem',{
     id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         autoIncrementIdentity: true,
@@ -17,5 +18,4 @@ export const MenuItem = sequelize.define('MenuItem',{
         allowNull: false
     }
 }, {timestamps: false});
-
 

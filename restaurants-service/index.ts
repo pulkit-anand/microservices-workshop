@@ -1,58 +1,42 @@
-import cote from 'cote';
+import cote, { Requester } from 'cote';
 import { Restaurant, menuItems } from '../shared//database/model/restaurant';
-import sequelize from '../shared/database/pgdb';
-
+import { User } from '../shared/database/model/user';
+import { Op } from 'sequelize';
+import { createAuthToken } from '../shared/middlewares/auth.middleware';
 
 const restaurantsResponder = new cote.Responder({ name: 'restaurants responder', key: 'restaurants' })
 restaurantsResponder.on('*', (req: any) => req.type && console.log(req))
 
-async function initializeRestaurantsData() {
-    const restaurants = [{
-        name: 'Italian Restaurant',
-        menu: [{
-            name: 'Pizza',
-            price: 14
-        }, {
-            name: 'Pasta',
-            price: 12
-        }]
-    }, {
-        name: 'American Restaurant',
-        menu: [{
-            name: 'Hamburger',
-            price: 10
-        }, {
-            name: 'Hot dog',
-            price: 10
-        }]
-    }]
-    
-    for(const rest of restaurants){
-        await Restaurant.create(rest, {
-            include: [
-                {
-                    association: menuItems,
-                    as: 'menu'
-                }
-            ]
-        });
-    }
-}
-
 const getRestaurantsFromDb = async () => {
     try {
-        await sequelize.sync({force: true});
-        const count = await Restaurant.count();
-        if(count === 0){
-            await initializeRestaurantsData();
-        }
         const result = await Restaurant.findAll({ include: ["menu"] });    
         return result;
     }
     catch (error) {
         console.log(error)
     }
+}
+
+const login = async (req: any) => {
+    const {username, password} = req.credentials;
+    const user = await User.findOne({
+        where: {
+            username: {
+                [Op.eq]: username
+            },
+            password: {
+                [Op.eq]: password
+            }
+        }
+    });
+    if(user){
+        const {id} = user.dataValues;
+        const token = createAuthToken(id);
+        return Promise.resolve(token);
+    }
 
 }
 
 restaurantsResponder.on('list', (req: any) => getRestaurantsFromDb())
+
+restaurantsResponder.on('customer login', (req: any) => login(req))
