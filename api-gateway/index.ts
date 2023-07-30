@@ -20,7 +20,7 @@ app.get('/restaurants', async (req:Request, res:Response) => {
 
 app.post('/order', authenticateJWT, async (req:Request, res:Response) => {
     const {userId} = (req as CustomRequest).payload as {userId: number};
-    const order = await orderRequester.send({ type: 'create order', order: req.body, userId:  userId})
+    const order = await orderRequester.send({ type: 'create order', order: req.body, userId:  userId});
     const delivery = await deliveryRequester.send({ type: 'create delivery', order })
     res.send({ order, delivery })
 })

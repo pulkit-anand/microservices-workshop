@@ -67,5 +67,13 @@
             ],
             "total": 200
         }
+    ],
+    "deliveries" : [
+        {
+            "id": 1,
+            "orderId": "OD01",
+            "eta": 40,
+            "status": "pending"
+        }
     ]
 }

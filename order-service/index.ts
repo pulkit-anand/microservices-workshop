@@ -67,7 +67,7 @@ orderResponder.on('create order', async (req: any) => {
                 as: 'menuItem' 
             }]
         }]})
-        const response = mapOrdersToResponse([_order]);
+        const response = mapOrdersToResponse([_order])[0];
         return Promise.resolve(response)
     }
     catch(error) {

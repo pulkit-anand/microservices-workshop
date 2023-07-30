@@ -3,6 +3,11 @@ import { Restaurant, menuItems } from '../shared//database/model/restaurant';
 import { User } from '../shared/database/model/user';
 import { Op } from 'sequelize';
 import { createAuthToken } from '../shared/middlewares/auth.middleware';
+import { seedData } from '../shared/database/seed-data/seed';
+
+seedData().then(() => {
+    console.log("Seeding success!")
+});
 
 const restaurantsResponder = new cote.Responder({ name: 'restaurants responder', key: 'restaurants' })
 restaurantsResponder.on('*', (req: any) => req.type && console.log(req))
