@@ -1,12 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express'
-import bodyParser from 'body-parser'
 import cote from 'cote'
 import { CustomRequest, authenticateJWT, createAuthToken } from '../shared/middlewares/auth.middleware'
-import { body, check, validationResult } from 'express-validator'
+import {  check, validationResult } from 'express-validator'
 
 const app = express()
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 const restaurantsRequester = new cote.Requester({ name: 'restaurants requester', key: 'restaurants' })
 
